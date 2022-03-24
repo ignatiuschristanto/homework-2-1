@@ -13,7 +13,7 @@
   }
 }
 
-.App-header {
+.App {
   background-color: #282c34;
   min-height: 100vh;
   display: flex;
@@ -24,15 +24,15 @@
   color: white;
 }
 
-.App-link {
-  color: #61dafb;
-}
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.new-btn {
+  background: transparent;
+	color: #fff;
+	border: 3px solid #fff;
+	border-radius: 50px;
+  font-size:18px;
+	padding: 18px 36px;
+  letter-spacing: 2px;
+	cursor: pointer;
+  margin-top: 20px;
 }
