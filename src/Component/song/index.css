@@ -1,0 +1,22 @@
+.song-wrapper {
+    display: flex;
+    justify-content: left;
+    align-items: center;
+    /* border: 1px solid; */
+    padding: 10px;
+    margin: 0 auto;
+    max-width: 1170px;
+}
+
+.text-wrapper {
+    width: 60%;
+    text-align: left;
+  }
+  
+.image-wrapper {
+    width: 30%;
+  }
+
+  .song-wrapper:hover{
+      background-color: #323741;
+  }
