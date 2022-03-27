@@ -1,4 +1,5 @@
-const SongComponent = ({url, name, artists}) =>{
+import './index.css';
+const SongComponent = ({url, name, artists, children}) =>{
     return (
         <div className="song-wrapper">
             <div className="image-wrapper">
@@ -6,12 +7,11 @@ const SongComponent = ({url, name, artists}) =>{
             </div>
             <div className='text-wrapper'>
             <h2 className='song-title'>{name}</h2>
-            <h3 className='song-artist'>{artists}</h3>
+            <h4 className='song-artist'>{artists}</h4>
             </div>
+            {children}
         </div>
     )
-    
-    
 }
 
 export default SongComponent;
