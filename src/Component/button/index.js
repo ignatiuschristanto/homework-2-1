@@ -1,6 +1,6 @@
-const ButtonComponent = () =>{
+const ButtonComponent = ({children}) =>{
     return (
-        <button type="button" className='new-btn'>Select</button>
+        <button className='new-btn'>{children}</button>
     )
     
 }

@@ -16,7 +16,7 @@
 .new-btn {
   background: transparent;
 	color: #fff;
-	border: 3px solid #fff;
+	border: 2px solid #fff;
 	border-radius: 50px;
   font-size:14px;
 	padding: 12px 24px;
@@ -37,3 +37,12 @@
   margin: 0 auto;
   padding-bottom: 15px;
 }
+
+input {
+  min-height: new-btn;
+  border: 2px solid #fff;
+  border-radius: 50px;
+  padding: 12px 24px;
+  margin-right: 5px;
+}
+

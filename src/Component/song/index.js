@@ -1,15 +1,16 @@
+import ButtonComponent from '../Button';
 import './index.css';
-const SongComponent = ({url, name, artists, children}) =>{
+const SongComponent = ({url, name, artists}) =>{
     return (
         <div className="song-wrapper">
             <div className="image-wrapper">
-            <img src={url} alt='album-image'></img>
+            <img src= {url} alt="album-img"></img>
             </div>
             <div className='text-wrapper'>
-            <h2 className='song-title'>{name}</h2>
+            <h3 className='song-title'>{name}</h3>
             <h4 className='song-artist'>{artists}</h4>
             </div>
-            {children}
+            <ButtonComponent>Select</ButtonComponent>
         </div>
     )
 }
