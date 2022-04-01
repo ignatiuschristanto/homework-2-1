@@ -1,101 +1,55 @@
-import {SearchBar} from '../../Component/Search';
-import SongComponent from '../../Component/Song';
+import SearchBar from '../../Component/Search';
 import ButtonComponent from '../../Component/Button';
 import '../../App.css';
-import React, { Component } from 'react';
+import React, { useState, useEffect } from 'react';
 
-class HomePage extends Component {
-    state = {
-        accessToken: '',
-        tracks: [],
-    }
-
-    getHashParams() {
-        const hashParams = {};
-        const r = /([^&;=]+)=?([^&;]*)/g;
-        const q = window.location.hash.substring(1);
-        let e = r.exec(q);
+const HomePage = () => {
+    const [accessToken, setAccessToken] = useState('')
     
-        while (e) {
-          hashParams[e[1]] = decodeURIComponent(e[2]);
-          e = r.exec(q);
+    useEffect(() => {
+        const hash = window.location.hash
+        let token = window.localStorage.getItem("token")
+        if(!token && hash){
+            token = hash.substring(1).split("&").find(elem=>elem.startsWith("access_token")).split("=")[1]
+            window.location.hash = ""
+            window.localStorage.setItem("token",token)
         }
-        return hashParams;
-      }
-    
-    componentDidMount() {
-        const params = this.getHashParams();
-        const { access_token: accessToken } = params;
-        this.setState({ accessToken })
-    }
-    
-      getSpotifyLinkAuthorize() {
-        const clientId = '70cf9cefa8974d39ac631f97d6bc02cf';
+        setAccessToken(token)
+    },[])
+
+    const getSpotifyLinkAuthorize= () => {
+        const clientId = process.env.REACT_APP_SPOTIFY_CLIENT_ID;
         const redirectUri = 'http://localhost:3000';
         const scope = 'playlist-modify-private';
-    
         return `https://accounts.spotify.com/authorize?client_id=${clientId}&response_type=token&redirect_uri=${redirectUri}&scope=${scope}`;
-      }
+    }
 
-      handleInput(e){
-        this.setState({searchKey : e.target.value})
-      }
+    const logout = () =>{
+        setAccessToken("")
+        window.localStorage.removeItem('token')
+        //console.log(accessToken)
+    }
 
-      getTracks = async(e) => {
-        e.preventDefault();
-        const tracks = await fetch(`https://api.spotify.com/v1/search?type=track&q=${this.searchKey}`, {
-            headers: {
-                Authorization: `Bearer ${this.state.accessToken}`
-            },
-        }).then((response) => response.json());
-        this.setState({tracks})
-        //console.log({tracks})
-      }
-
-      onSuccessSearch(tracks) {
-        this.setState({tracks});
-      }
-
-      render(){
-        
-        return (
-            <>
-            {!this.state.accessToken && (
+    return (
+        <>
+            {!accessToken && (
                 <div className="container">
                     <h1>Please Login to Continue</h1>
-                    <a href={this.getSpotifyLinkAuthorize()}><ButtonComponent>Login</ButtonComponent></a>
+                    <a href={getSpotifyLinkAuthorize()}><ButtonComponent>Login</ButtonComponent></a>
                 </div>
             )}
-
-            {this.state.accessToken && (
-                <div className="container">
+            {accessToken && (
+                <div className="container">        
                     <SearchBar
-                        accessToken={this.state.accessToken}
-                        onSuccess={(tracks) => this.onSuccessSearch(tracks)}
-                    />
-                    <div className="content">
-                        {this.state.tracks.length === 0 && (
-                            <p></p>
-                        )}
-                        <div className="song-content">
-                            {this.state.tracks.map((song) => (
-                                <SongComponent 
-                                    key={song.id}
-                                    url={song.album.images[1].url}
-                                    name={song.name}
-                                    artists={song.artists[0].name}
-                                />
-                            ))}
-                        </div>
-                    </div>
+                    accessToken={accessToken}/>
+                    <ButtonComponent className='new-btn' onClick = {logout}>Logout</ButtonComponent>
                 </div>
+                
             )}
-            </>
-            
-            
-        )
-      }
-        
+        </>
+    )
+      
 }
 
-export {HomePage};
+
+export default HomePage;

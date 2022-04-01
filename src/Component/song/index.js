@@ -1,16 +1,24 @@
 import ButtonComponent from '../Button';
+import { useState } from 'react';
 import './index.css';
-const SongComponent = ({url, name, artists}) =>{
+const SongComponent = ({url, name, artists, toggleSelect}) =>{
+    const [isSelected,setIsSelected] = useState(false)
+
+    const handleSelect = () => {
+        setIsSelected(!isSelected);
+        toggleSelect();
+    }
+
     return (
         <div className="song-wrapper">
             <div className="image-wrapper">
-            <img src= {url} alt="album-img"></img>
+            <img src= {url} height={200} width={200} alt="album-img"></img>
             </div>
             <div className='text-wrapper'>
             <h3 className='song-title'>{name}</h3>
             <h4 className='song-artist'>{artists}</h4>
             </div>
-            <ButtonComponent>Select</ButtonComponent>
+            <ButtonComponent onClick={handleSelect}>{isSelected? 'Deselect' : 'Select'}</ButtonComponent>
         </div>
     )
 }
