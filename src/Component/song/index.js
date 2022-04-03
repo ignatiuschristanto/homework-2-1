@@ -1,7 +1,8 @@
 import ButtonComponent from '../Button';
 import { useState } from 'react';
 import './index.css';
-const SongComponent = ({url, name, artists, toggleSelect}) =>{
+const SongComponent = (props) =>{
+    const {url, name, artists, toggleSelect} = props
     const [isSelected,setIsSelected] = useState(false)
 
     const handleSelect = () => {
