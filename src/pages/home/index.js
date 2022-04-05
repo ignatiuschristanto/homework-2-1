@@ -4,6 +4,8 @@ import '../../App.css';
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import PlayListForm from '../../Component/PlaylistForm';
+import { useDispatch, useSelector } from 'react-redux';
+import {login, logout} from '../../redux/account-slice';
 
 const HomePage = () => {
     const [input, setInput] = useState ({
@@ -11,19 +13,21 @@ const HomePage = () => {
         playlistDesc: '',
         searchKey: ''
     })
-    const [accessToken, setAccessToken] = useState('')
+    //const [accessToken, setAccessToken] = useState('')
     const [tracks, setTracks] = useState([])
     const [selectedTracksUri, setSelectedTracksUri] = useState([])
     const [isInSearch, setIsInSearch] = useState(false);
     const [userID, setUserID] = useState("");
     const [currentProfileData, setCurrentProfileData] = useState([]);
+    const accessToken = useSelector((state) => state.authToken.accessToken);
+    const dispatch = useDispatch();
 
     useEffect (()=> {
         if(!isInSearch){
             const selectedTracks = tracks.filter((track) => selectedTracksUri.includes(track.uri));
             setTracks(selectedTracks);
         }
-    }, [selectedTracksUri]);
+    }, [selectedTracksUri, isInSearch, tracks]);
 
     useEffect(() => {
         const hash = window.location.hash
@@ -33,7 +37,8 @@ const HomePage = () => {
             window.location.hash = ""
             window.localStorage.setItem("token",token)
         }
-        setAccessToken(token)
+        //setAccessToken(token)
+        dispatch(login({accessToken: token}));
 
         const getUserData = async () =>{
             await axios.get(`https://api.spotify.com/v1/me`,
@@ -42,7 +47,6 @@ const HomePage = () => {
                     Authorization: `Bearer ${accessToken}`
                 },
             }).then ((response) => {
-                console.log(response);
                 setCurrentProfileData(response.data);
                 setUserID(response.data.id);
                 }
@@ -51,7 +55,7 @@ const HomePage = () => {
         if(accessToken){
             getUserData();
         }
-    },[])
+    },[accessToken])
 
     const getSpotifyLinkAuthorize= () => {
         const clientId = process.env.REACT_APP_SPOTIFY_CLIENT_ID;
@@ -149,8 +153,9 @@ const HomePage = () => {
         await AddMusicToCreatedPlaylist(playListID);
     }
 
-    const logout = () =>{
-        setAccessToken("")
+    const setLogout = () =>{
+        dispatch(logout({accessToken: ''}));
+        //setAccessToken("")
         window.localStorage.removeItem('token')
         //console.log(accessToken)
     }
@@ -182,7 +187,7 @@ const HomePage = () => {
                         />
                     </div>        
                     
-                    <ButtonComponent className='new-btn' onClick = {logout}>Logout</ButtonComponent>
+                    <ButtonComponent className='new-btn' onClick = {setLogout}>Logout</ButtonComponent>
                 </div>
                 
             )}
