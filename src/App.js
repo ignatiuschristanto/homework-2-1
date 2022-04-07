@@ -1,15 +1,12 @@
 import './App.css';
+import AppRoute from './AppRouter';
 import HomePage from './pages/home';
-import { Provider } from 'react-redux';
-import store from './store';
 
 function App() {
-  return (
-    <Provider store = {store}>
+  return (  
       <div className="App">
-        <HomePage />  
+        <AppRoute />
       </div>
-    </Provider>
   );
 }
 

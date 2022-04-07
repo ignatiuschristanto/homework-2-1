@@ -20,6 +20,7 @@ const HomePage = () => {
     const [userID, setUserID] = useState("");
     const [currentProfileData, setCurrentProfileData] = useState([]);
     const accessToken = useSelector((state) => state.authToken.accessToken);
+    const isLogin = useSelector((state) => state.authToken.isLogin);
     const dispatch = useDispatch();
 
     useEffect (()=> {
@@ -38,7 +39,10 @@ const HomePage = () => {
             window.localStorage.setItem("token",token)
         }
         //setAccessToken(token)
-        dispatch(login({accessToken: token}));
+        dispatch(login({
+            accessToken: token,
+            isLogin: true,
+        }));
 
         const getUserData = async () =>{
             await axios.get(`https://api.spotify.com/v1/me`,
@@ -55,7 +59,7 @@ const HomePage = () => {
         if(accessToken){
             getUserData();
         }
-    },[accessToken])
+    },[])
 
     const getSpotifyLinkAuthorize= () => {
         const clientId = process.env.REACT_APP_SPOTIFY_CLIENT_ID;
@@ -154,7 +158,10 @@ const HomePage = () => {
     }
 
     const setLogout = () =>{
-        dispatch(logout({accessToken: ''}));
+        dispatch(logout({
+            accessToken: '',
+            isLogin: false
+        }));
         //setAccessToken("")
         window.localStorage.removeItem('token')
         //console.log(accessToken)
@@ -162,13 +169,13 @@ const HomePage = () => {
 
     return (
         <>
-            {!accessToken && (
+            {!isLogin && (
                 <div className="container">
                     <h1>Please Login to Continue</h1>
                     <a href={getSpotifyLinkAuthorize()}><ButtonComponent>Login</ButtonComponent></a>
                 </div>
             )}
-            {accessToken && (
+            {isLogin && (
                 <div className="container">
                     <div className='playlist-container'>
                         <PlayListForm
