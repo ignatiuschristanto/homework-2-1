@@ -1,7 +1,7 @@
 
 import ButtonComponent from '../Button'
 import SongComponent from '../Song';
-
+import './index.css';
 
 const SearchBar = (props) => {
     const {getTracks, handleInput, tracks, toggleSelect, input} = props

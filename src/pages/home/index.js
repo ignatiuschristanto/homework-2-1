@@ -6,6 +6,7 @@ import axios from 'axios';
 import PlayListForm from '../../Component/PlaylistForm';
 import { useDispatch, useSelector } from 'react-redux';
 import {login, logout} from '../../redux/account-slice';
+import LoginPage from '../login';
 
 const HomePage = () => {
     const [input, setInput] = useState ({
@@ -28,7 +29,7 @@ const HomePage = () => {
             const selectedTracks = tracks.filter((track) => selectedTracksUri.includes(track.uri));
             setTracks(selectedTracks);
         }
-    }, [selectedTracksUri, isInSearch, tracks]);
+    }, []);
 
     useEffect(() => {
         const hash = window.location.hash
@@ -170,6 +171,7 @@ const HomePage = () => {
     return (
         <>
             {!isLogin && (
+                // <LoginPage getSpotifyLinkAuthorize = {getSpotifyLinkAuthorize}/>
                 <div className="container">
                     <h1>Please Login to Continue</h1>
                     <a href={getSpotifyLinkAuthorize()}><ButtonComponent>Login</ButtonComponent></a>

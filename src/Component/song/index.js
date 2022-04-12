@@ -16,10 +16,11 @@ const SongComponent = (props) =>{
             <img src= {url} height={200} width={200} alt="album-img"></img>
             </div>
             <div className='text-wrapper'>
-            <h3 className='song-title'>{name}</h3>
-            <h4 className='song-artist'>{artists}</h4>
-            </div>
+            <p className='song-title'>{name}</p>
+            <p className='song-artist'>{artists}</p>
             <ButtonComponent onClick={handleSelect}>{isSelected? 'Deselect' : 'Select'}</ButtonComponent>
+            </div>
+            
         </div>
     )
 }

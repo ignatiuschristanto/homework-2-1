@@ -1,20 +1,22 @@
 .song-wrapper {
     display: flex;
-    justify-content: left;
-    align-items: center;
-    /* border: 1px solid; */
-    padding: 10px;
+    flex-direction: row;
+    justify-content: space-between;
+    /* align-items: center; */
+    border: 1px solid;
+    padding: 1rem;
     margin: 0 auto;
-    max-width: 1170px;
+    width: 400px;
+    height: 250px;
 }
 
 .text-wrapper {
-    width: 50%;
-    text-align: left;
+    /* width: 50%; */
+    align-content: left;
   }
   
 .image-wrapper {
-    width: 30%;
+    /* width: 30%; */
   }
 
   .song-wrapper:hover{

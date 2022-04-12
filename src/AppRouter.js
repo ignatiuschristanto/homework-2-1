@@ -6,7 +6,7 @@ import {
     Redirect
  } from "react-router-dom";
 import HomePage from "./pages/home";
-
+import LoginPage from "./pages/login";
 
 const AppRoute = () => {
      const isLogin = useSelector((state) => state.authToken.isLogin);
