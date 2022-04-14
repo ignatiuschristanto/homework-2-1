@@ -15,9 +15,7 @@
     align-content: left;
   }
   
-.image-wrapper {
-    /* width: 30%; */
-  }
+
 
   .song-wrapper:hover{
       background-color: #323741;
